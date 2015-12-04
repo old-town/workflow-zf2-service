@@ -8,12 +8,14 @@ namespace OldTown\Workflow\ZF2\ServiceEngine;
 
 use OldTown\Workflow\ZF2\ServiceEngine\Options\ModuleOptions;
 use OldTown\Workflow\ZF2\ServiceEngine\Options\ModuleOptionsFactory;;
-
+use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager;
+use OldTown\Workflow\ZF2\ServiceEngine\Service\ManagerFactory;
 
 return [
     'service_manager'           => [
         'factories'          => [
-            ModuleOptions::class => ModuleOptionsFactory::class
+            ModuleOptions::class => ModuleOptionsFactory::class,
+            Manager::class => ManagerFactory::class
         ],
         'abstract_factories' => [
 

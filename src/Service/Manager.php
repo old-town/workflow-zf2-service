@@ -15,12 +15,6 @@ use Zend\ServiceManager\AbstractPluginManager;
 class Manager extends AbstractPluginManager
 {
     /**
-     * @var string
-     */
-    const DEFAULT_HANDLER = 'default';
-
-
-    /**
      * @param mixed $plugin
      *
      * @return bool
