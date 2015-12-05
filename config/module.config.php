@@ -6,6 +6,8 @@
 namespace OldTown\Workflow\ZF2\ServiceEngine;
 
 
+use OldTown\Workflow\ZF2\ServiceEngine\Listener\InjectTypeResolver;
+use OldTown\Workflow\ZF2\ServiceEngine\Listener\InjectTypeResolverFactory;
 use OldTown\Workflow\ZF2\ServiceEngine\Options\ModuleOptions;
 use OldTown\Workflow\ZF2\ServiceEngine\Options\ModuleOptionsFactory;;
 use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager;
@@ -15,7 +17,8 @@ return [
     'service_manager'           => [
         'factories'          => [
             ModuleOptions::class => ModuleOptionsFactory::class,
-            Manager::class => ManagerFactory::class
+            Manager::class => ManagerFactory::class,
+            InjectTypeResolver::class => InjectTypeResolverFactory::class
         ],
         'abstract_factories' => [
 
