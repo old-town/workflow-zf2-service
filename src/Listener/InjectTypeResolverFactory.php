@@ -8,7 +8,7 @@ namespace OldTown\Workflow\ZF2\ServiceEngine\Listener;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager;
-
+use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\Chain;
 
 /**
  * Class InjectTypeResolverFactory
@@ -29,9 +29,11 @@ class InjectTypeResolverFactory implements  FactoryInterface
     {
         /** @var Manager $workflowServiceManager */
         $workflowServiceManager = $serviceLocator->get(Manager::class);
+        $chainResolver = $serviceLocator->get(Chain::class);
 
         $options = [
-            InjectTypeResolver::WORKFLOW_SERVICE_MANAGER => $workflowServiceManager
+            InjectTypeResolver::WORKFLOW_SERVICE_MANAGER => $workflowServiceManager,
+            InjectTypeResolver::CHAIN_TYPE_RESOLVER => $chainResolver
         ];
 
         $service = new InjectTypeResolver($options);

@@ -6,10 +6,12 @@
 namespace OldTown\Workflow\ZF2\ServiceEngine\Listener;
 
 use OldTown\Workflow\ZF2\Event\WorkflowManagerEvent;
+use OldTown\Workflow\ZF2\ServiceEngine\Event\WorkflowTypeResolverEvent;
 use Zend\EventManager\AbstractListenerAggregate;
+use Zend\EventManager\EventManagerAwareTrait;
 use Zend\EventManager\EventManagerInterface;
 use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager as WorkflowServiceManager;
-
+use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ChainTypeResolverInterface;
 
 /**
  * Class InjectTypeResolver
@@ -18,10 +20,17 @@ use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager as WorkflowServiceManager
  */
 class InjectTypeResolver extends AbstractListenerAggregate
 {
+    use EventManagerAwareTrait;
+
     /**
      * @var string
      */
     const WORKFLOW_SERVICE_MANAGER = 'workflowServiceManager';
+
+    /**
+     * @var string
+     */
+    const CHAIN_TYPE_RESOLVER = 'chainResolver';
 
     /**
      * @var WorkflowServiceManager
@@ -29,27 +38,26 @@ class InjectTypeResolver extends AbstractListenerAggregate
     protected $workflowServiceManager;
 
     /**
-     * @param array $options
-     *
-     * @throws  \OldTown\Workflow\ZF2\ServiceEngine\Listener\Exception\InvalidArgumentException
+     * @var ChainTypeResolverInterface
      */
-    public function __construct(array $options = [])
-    {
-        $this->init($options);
-    }
+    protected $chainTypeResolver;
 
     /**
      * @param array $options
-     *
-     * @throws  \OldTown\Workflow\ZF2\ServiceEngine\Listener\Exception\InvalidArgumentException
      */
-    protected function init(array $options = [])
+    public function __construct(array $options = [])
     {
-        if (!array_key_exists(static::WORKFLOW_SERVICE_MANAGER, $options)) {
-            $errMsg = sprintf('option %s not found', static::WORKFLOW_SERVICE_MANAGER);
-            throw new Exception\InvalidArgumentException($errMsg);
-        }
-        $this->setWorkflowServiceManager($options[static::WORKFLOW_SERVICE_MANAGER]);
+        call_user_func_array([$this, 'init'], $options);
+    }
+
+    /**
+     * @param WorkflowServiceManager     $workflowServiceManager
+     * @param ChainTypeResolverInterface $chainResolver
+     */
+    protected function init(WorkflowServiceManager $workflowServiceManager, ChainTypeResolverInterface $chainResolver)
+    {
+        $this->setWorkflowServiceManager($workflowServiceManager);
+        $this->setChainTypeResolver($chainResolver);
     }
 
     /**
@@ -61,14 +69,43 @@ class InjectTypeResolver extends AbstractListenerAggregate
     }
 
     /**
+     * Обработчки по умолчанию
+     */
+    protected function attachDefaultListeners()
+    {
+        $this->getEventManager()->attach(WorkflowTypeResolverEvent::INJECT_WORKFLOW_TYPE_RESOLVER, [$this, 'addServiceTypeResolver']);
+    }
+
+    /**
+     * Добавляет поддержку сервисов
+     *
+     * @param WorkflowTypeResolverEvent $event
+     */
+    public function addServiceTypeResolver(WorkflowTypeResolverEvent $event)
+    {
+        $chainTypeResolver = $event->getChainTypeResolver();
+    }
+
+    /**
      * Обработччик отвечающий за иньъекцию в менеджер workflow, поддержки запуска сервисов
      *
      * @param WorkflowManagerEvent $event
      */
     public function createWorkflowManager(WorkflowManagerEvent $event)
     {
+        $workflowManager = $event->getWorkflowManager();
+        $originalTypeResolver = $workflowManager->getResolver();
+        $chainTypeResolver = $this->getChainTypeResolver();
+        $resolver = $chainTypeResolver->add($originalTypeResolver, 1);
 
+        $workflowTypeResolverEvent = new WorkflowTypeResolverEvent();
+        $workflowTypeResolverEvent->setName(WorkflowTypeResolverEvent::INJECT_WORKFLOW_TYPE_RESOLVER);
+        $workflowTypeResolverEvent->setWorkflowManager($workflowManager);
+        $workflowTypeResolverEvent->setChainTypeResolver($chainTypeResolver);
+        $workflowTypeResolverEvent->setTarget($this);
+        $this->getEventManager()->trigger($workflowTypeResolverEvent);
 
+        $workflowManager->setTypeResolver($resolver);
     }
 
     /**
@@ -91,4 +128,23 @@ class InjectTypeResolver extends AbstractListenerAggregate
         return $this;
     }
 
+    /**
+     * @return ChainTypeResolverInterface
+     */
+    public function getChainTypeResolver()
+    {
+        return $this->chainTypeResolver;
+    }
+
+    /**
+     * @param ChainTypeResolverInterface $chainTypeResolver
+     *
+     * @return $this
+     */
+    public function setChainTypeResolver(ChainTypeResolverInterface $chainTypeResolver)
+    {
+        $this->chainTypeResolver = $chainTypeResolver;
+
+        return $this;
+    }
 }
