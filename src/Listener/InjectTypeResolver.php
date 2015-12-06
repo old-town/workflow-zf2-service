@@ -12,6 +12,7 @@ use Zend\EventManager\EventManagerAwareTrait;
 use Zend\EventManager\EventManagerInterface;
 use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager as WorkflowServiceManager;
 use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ChainTypeResolverInterface;
+use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver;
 
 /**
  * Class InjectTypeResolver
@@ -33,6 +34,11 @@ class InjectTypeResolver extends AbstractListenerAggregate
     const CHAIN_TYPE_RESOLVER = 'chainResolver';
 
     /**
+     * @var string
+     */
+    const SERVICE_TYPE_RESOLVER = 'serviceResolver';
+
+    /**
      * @var WorkflowServiceManager
      */
     protected $workflowServiceManager;
@@ -41,6 +47,11 @@ class InjectTypeResolver extends AbstractListenerAggregate
      * @var ChainTypeResolverInterface
      */
     protected $chainTypeResolver;
+
+    /**
+     * @var ServiceTypeResolver
+     */
+    protected $serviceResolver;
 
     /**
      * @param array $options
@@ -53,11 +64,13 @@ class InjectTypeResolver extends AbstractListenerAggregate
     /**
      * @param WorkflowServiceManager     $workflowServiceManager
      * @param ChainTypeResolverInterface $chainResolver
+     * @param ServiceTypeResolver        $serviceResolver
      */
-    protected function init(WorkflowServiceManager $workflowServiceManager, ChainTypeResolverInterface $chainResolver)
+    protected function init(WorkflowServiceManager $workflowServiceManager, ChainTypeResolverInterface $chainResolver, ServiceTypeResolver $serviceResolver)
     {
         $this->setWorkflowServiceManager($workflowServiceManager);
         $this->setChainTypeResolver($chainResolver);
+        $this->setServiceResolver($serviceResolver);
     }
 
     /**
@@ -83,7 +96,8 @@ class InjectTypeResolver extends AbstractListenerAggregate
      */
     public function addServiceTypeResolver(WorkflowTypeResolverEvent $event)
     {
-        $chainTypeResolver = $event->getChainTypeResolver();
+        $serviceTypeResolver = $this->getServiceResolver();
+        $event->getChainTypeResolver()->add($serviceTypeResolver);
     }
 
     /**
@@ -96,7 +110,7 @@ class InjectTypeResolver extends AbstractListenerAggregate
         $workflowManager = $event->getWorkflowManager();
         $originalTypeResolver = $workflowManager->getResolver();
         $chainTypeResolver = $this->getChainTypeResolver();
-        $resolver = $chainTypeResolver->add($originalTypeResolver, 1);
+        $resolver = $chainTypeResolver->add($originalTypeResolver, 0);
 
         $workflowTypeResolverEvent = new WorkflowTypeResolverEvent();
         $workflowTypeResolverEvent->setName(WorkflowTypeResolverEvent::INJECT_WORKFLOW_TYPE_RESOLVER);
@@ -144,6 +158,26 @@ class InjectTypeResolver extends AbstractListenerAggregate
     public function setChainTypeResolver(ChainTypeResolverInterface $chainTypeResolver)
     {
         $this->chainTypeResolver = $chainTypeResolver;
+
+        return $this;
+    }
+
+    /**
+     * @return ServiceTypeResolver
+     */
+    public function getServiceResolver()
+    {
+        return $this->serviceResolver;
+    }
+
+    /**
+     * @param ServiceTypeResolver $serviceResolver
+     *
+     * @return $this
+     */
+    public function setServiceResolver(ServiceTypeResolver $serviceResolver)
+    {
+        $this->serviceResolver = $serviceResolver;
 
         return $this;
     }

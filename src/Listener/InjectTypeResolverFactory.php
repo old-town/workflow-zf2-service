@@ -9,6 +9,7 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager;
 use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ChainTypeResolver;
+use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver;
 
 /**
  * Class InjectTypeResolverFactory
@@ -30,10 +31,12 @@ class InjectTypeResolverFactory implements  FactoryInterface
         /** @var Manager $workflowServiceManager */
         $workflowServiceManager = $serviceLocator->get(Manager::class);
         $chainResolver = $serviceLocator->get(ChainTypeResolver::class);
+        $serviceResolver = $serviceLocator->get(ServiceTypeResolver::class);
 
         $options = [
             InjectTypeResolver::WORKFLOW_SERVICE_MANAGER => $workflowServiceManager,
-            InjectTypeResolver::CHAIN_TYPE_RESOLVER => $chainResolver
+            InjectTypeResolver::CHAIN_TYPE_RESOLVER => $chainResolver,
+            InjectTypeResolver::SERVICE_TYPE_RESOLVER => $serviceResolver
         ];
 
         $service = new InjectTypeResolver($options);

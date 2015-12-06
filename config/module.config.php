@@ -13,16 +13,19 @@ use OldTown\Workflow\ZF2\ServiceEngine\Options\ModuleOptionsFactory;;
 use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager;
 use OldTown\Workflow\ZF2\ServiceEngine\Service\ManagerFactory;
 use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ChainTypeResolver;
+use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver;
+use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolverFactory;
 
 return [
     'service_manager'           => [
         'invokables' => [
-            ChainTypeResolver::class => ChainTypeResolver::class
+            ChainTypeResolver::class => ChainTypeResolver::class,
         ],
         'factories'          => [
             ModuleOptions::class => ModuleOptionsFactory::class,
             Manager::class => ManagerFactory::class,
-            InjectTypeResolver::class => InjectTypeResolverFactory::class
+            InjectTypeResolver::class => InjectTypeResolverFactory::class,
+            ServiceTypeResolver::class => ServiceTypeResolverFactory::class
         ],
         'abstract_factories' => [
 

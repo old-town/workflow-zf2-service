@@ -160,7 +160,7 @@ class ChainTypeResolver implements ChainTypeResolverInterface
      * @param string $type
      * @param array  $args
      *
-     * @return FunctionProviderInterface
+     * @return ConditionInterface
      *
      * @throws Exception\ResultNotFoundException
      * @throws Exception\RuntimeException
