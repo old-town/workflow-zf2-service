@@ -17,7 +17,7 @@ use SplPriorityQueue;
  *
  * @package OldTown\Workflow\ZF2\ServiceEngine\Service
  */
-class Chain implements ChainTypeResolverInterface
+class ChainTypeResolver implements ChainTypeResolverInterface
 {
     /**
      * @var SplPriorityQueue|TypeResolverInterface[]

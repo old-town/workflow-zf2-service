@@ -12,12 +12,12 @@ use OldTown\Workflow\ZF2\ServiceEngine\Options\ModuleOptions;
 use OldTown\Workflow\ZF2\ServiceEngine\Options\ModuleOptionsFactory;;
 use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager;
 use OldTown\Workflow\ZF2\ServiceEngine\Service\ManagerFactory;
-use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\Chain;
+use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ChainTypeResolver;
 
 return [
     'service_manager'           => [
         'invokables' => [
-            Chain::class => Chain::class
+            ChainTypeResolver::class => ChainTypeResolver::class
         ],
         'factories'          => [
             ModuleOptions::class => ModuleOptionsFactory::class,
