@@ -6,34 +6,31 @@
 namespace OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver;
 
 use OldTown\PropertySet\PropertySetInterface;
-use OldTown\Workflow\FunctionProviderInterface;
+use OldTown\Workflow\ConditionInterface;
 use OldTown\Workflow\TransientVars\TransientVarsInterface;
-use Traversable;
 
 /**
  * Class FunctionWrapper
  *
  * @package OldTown\Workflow\ZF2\ServiceEngine\TypeResolver
  */
-class FunctionWrapper extends AbstractWrapper implements FunctionProviderInterface
+class ConditionWrapper extends AbstractWrapper implements ConditionInterface
 {
     /**
      * @param TransientVarsInterface $transientVars
      * @param array                  $args
      * @param PropertySetInterface   $ps
+     *
+     * @return bool
      */
-    public function execute(TransientVarsInterface $transientVars, array $args = [], PropertySetInterface $ps)
+    public function passesCondition(TransientVarsInterface $transientVars, array $args = [], PropertySetInterface $ps)
     {
         $serviceUtil = static::getServiceUtil();
         $service = $this->getService();
         $listArguments = $serviceUtil->buildArgumentsForService($service, $transientVars, $args);
 
-        $result = call_user_func_array($service, $listArguments);
+        $result = (boolean)call_user_func_array($service, $listArguments);
 
-        if ($result instanceof Traversable) {
-            foreach ($result as $key => $value) {
-                $transientVars[$key] = $value;
-            }
-        }
+        return $result;
     }
 }

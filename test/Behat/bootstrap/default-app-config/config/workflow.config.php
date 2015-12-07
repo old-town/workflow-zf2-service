@@ -8,12 +8,12 @@ use OldTown\Workflow\Basic\BasicWorkflow;
 use OldTown\Workflow\Loader\CallbackWorkflowFactory;
 use OldTown\Workflow\Spi\Memory\MemoryWorkflowStore;
 use OldTown\Workflow\Util\DefaultVariableResolver;
-use OldTown\Workflow\ZF2\ServiceEngine\Behat\Test\Service\CallbackService;
+use OldTown\Workflow\ZF2\ServiceEngine\Behat\Test\Service\TestService;
 
 return [
     'workflow_zf2_service' => [
         'invokables' => [
-            'callbackService' => CallbackService::class
+            'callbackService' => TestService::class
         ]
     ],
 

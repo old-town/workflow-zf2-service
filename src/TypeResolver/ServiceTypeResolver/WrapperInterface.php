@@ -12,4 +12,8 @@ namespace OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver;
  */
 interface WrapperInterface
 {
+    /**
+     * @return callable
+     */
+    public function getService();
 }

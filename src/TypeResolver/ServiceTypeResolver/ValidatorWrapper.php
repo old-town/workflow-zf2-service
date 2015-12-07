@@ -6,34 +6,27 @@
 namespace OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver;
 
 use OldTown\PropertySet\PropertySetInterface;
-use OldTown\Workflow\FunctionProviderInterface;
 use OldTown\Workflow\TransientVars\TransientVarsInterface;
-use Traversable;
+use OldTown\Workflow\ValidatorInterface;
 
 /**
  * Class FunctionWrapper
  *
  * @package OldTown\Workflow\ZF2\ServiceEngine\TypeResolver
  */
-class FunctionWrapper extends AbstractWrapper implements FunctionProviderInterface
+class ValidatorWrapper extends AbstractWrapper implements ValidatorInterface
 {
     /**
      * @param TransientVarsInterface $transientVars
      * @param array                  $args
      * @param PropertySetInterface   $ps
      */
-    public function execute(TransientVarsInterface $transientVars, array $args = [], PropertySetInterface $ps)
+    public function validate(TransientVarsInterface $transientVars, array $args = [], PropertySetInterface $ps)
     {
         $serviceUtil = static::getServiceUtil();
         $service = $this->getService();
         $listArguments = $serviceUtil->buildArgumentsForService($service, $transientVars, $args);
 
-        $result = call_user_func_array($service, $listArguments);
-
-        if ($result instanceof Traversable) {
-            foreach ($result as $key => $value) {
-                $transientVars[$key] = $value;
-            }
-        }
+        call_user_func_array($service, $listArguments);
     }
 }

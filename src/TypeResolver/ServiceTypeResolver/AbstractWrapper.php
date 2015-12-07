@@ -5,6 +5,9 @@
  */
 namespace OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver;
 
+use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver\Util\ServiceUtil;
+use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver\Util\ServiceUtilInterface;
+
 /**
  * Class AbstractWrapper
  *
@@ -16,6 +19,11 @@ abstract class AbstractWrapper implements WrapperInterface
      * @var callable
      */
     protected $service;
+
+    /**
+     * @var ServiceUtilInterface
+     */
+    protected static $serviceUtil;
 
     /**
      * @param callable $service
@@ -31,5 +39,24 @@ abstract class AbstractWrapper implements WrapperInterface
     public function getService()
     {
         return $this->service;
+    }
+
+    /**
+     * @return ServiceUtilInterface
+     */
+    public static function getServiceUtil()
+    {
+        if (null === static::$serviceUtil) {
+            static::$serviceUtil = new ServiceUtil();
+        }
+        return static::$serviceUtil;
+    }
+
+    /**
+     * @param ServiceUtilInterface $serviceUtil
+     */
+    public static function setServiceUtil(ServiceUtilInterface $serviceUtil)
+    {
+        static::$serviceUtil = $serviceUtil;
     }
 }

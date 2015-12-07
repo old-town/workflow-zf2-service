@@ -11,6 +11,7 @@ use OldTown\Workflow\RegisterInterface;
 use OldTown\Workflow\TypeResolverInterface;
 use OldTown\Workflow\ValidatorInterface;
 use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager;
+use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver\WrapperInterface;
 
 /**
  * Class ManagerFactory
@@ -61,9 +62,17 @@ class ServiceTypeResolver implements TypeResolverInterface
      * @param array  $args
      *
      * @return ValidatorInterface
+     *
+     * @throws Exception\ErrorCreatingValidatorException
      */
     public function getValidator($type, array $args = [])
     {
+        try {
+            $wrapper = $this->wrapperFactory($type, $args, ServiceTypeResolver\ValidatorWrapper::class);
+        } catch (\Exception $e) {
+            throw new Exception\ErrorCreatingValidatorException($e->getMessage(), $e->getCode(), $e);
+        }
+        return $wrapper;
     }
 
     /**
@@ -71,9 +80,17 @@ class ServiceTypeResolver implements TypeResolverInterface
      * @param array  $args
      *
      * @return RegisterInterface
+     *
+     * @throws Exception\ErrorCreatingRegisterException
      */
     public function getRegister($type, array $args = [])
     {
+        try {
+            $wrapper = $this->wrapperFactory($type, $args, ServiceTypeResolver\RegisterWrapper::class);
+        } catch (\Exception $e) {
+            throw new Exception\ErrorCreatingRegisterException($e->getMessage(), $e->getCode(), $e);
+        }
+        return $wrapper;
     }
 
     /**
@@ -82,13 +99,58 @@ class ServiceTypeResolver implements TypeResolverInterface
      *
      * @return FunctionProviderInterface|null
      *
+     * @throws Exception\ErrorCreatingFunctionException
+     */
+    public function getFunction($type, array $args = [])
+    {
+        try {
+            $wrapper = $this->wrapperFactory($type, $args, ServiceTypeResolver\FunctionWrapper::class);
+        } catch (\Exception $e) {
+            throw new Exception\ErrorCreatingFunctionException($e->getMessage(), $e->getCode(), $e);
+        }
+        return $wrapper;
+    }
+
+    /**
+     * @param string $type
+     * @param array  $args
+     *
+     * @return ConditionInterface
+     *
+     * @throws Exception\ErrorCreatingConditionException
+     */
+    public function getCondition($type, array $args = [])
+    {
+        try {
+            $wrapper = $this->wrapperFactory($type, $args, ServiceTypeResolver\ConditionWrapper::class);
+        } catch (\Exception $e) {
+            throw new Exception\ErrorCreatingConditionException($e->getMessage(), $e->getCode(), $e);
+        }
+        return $wrapper;
+    }
+
+    /**
+     * @return Manager
+     */
+    public function getWorkflowServiceManager()
+    {
+        return $this->workflowServiceManager;
+    }
+
+    /**
+     * @param       $type
+     * @param array $args
+     * @param       $classWrapper
+     *
+     * @return WrapperInterface|null
+     *
      * @throws Exception\InvalidServiceNameException
      * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
      * @throws \Zend\ServiceManager\Exception\ServiceNotCreatedException
      * @throws \Zend\ServiceManager\Exception\RuntimeException
-     * @throws \OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\Exception\InvalidServiceException
+     * @throws Exception\InvalidServiceException
      */
-    public function getFunction($type, array $args = [])
+    protected function wrapperFactory($type, array $args = [], $classWrapper)
     {
         if (static::SERVICE_TYPE !== $type) {
             return null;
@@ -114,26 +176,11 @@ class ServiceTypeResolver implements TypeResolverInterface
             throw new Exception\InvalidServiceException($errMsg);
         }
 
-        $wrapper = new ServiceTypeResolver\FunctionWrapper($serviceCallback);
+        $r = new \ReflectionClass($classWrapper);
+        $wrapper = $r->newInstanceArgs([
+            'service' => $serviceCallback
+        ]);
 
         return $wrapper;
-    }
-
-    /**
-     * @param string $type
-     * @param array  $args
-     *
-     * @return ConditionInterface
-     */
-    public function getCondition($type, array $args = [])
-    {
-    }
-
-    /**
-     * @return Manager
-     */
-    public function getWorkflowServiceManager()
-    {
-        return $this->workflowServiceManager;
     }
 }
