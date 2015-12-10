@@ -3,7 +3,7 @@ default:
     '': %paths.base%/test/Behat/bootstrap/
   suites:
     service:
-      paths: [%paths.base%/test/Behat/features/service-engine]
+      paths: [%paths.base%/test/Behat/features/service]
       contexts:
         - ServiceContext
   extensions:

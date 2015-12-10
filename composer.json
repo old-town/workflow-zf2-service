@@ -1,6 +1,6 @@
 {
   "name": "old-town/workflow-zf2-service",
-  "description": "Workflow service engine",
+  "description": "Workflow service",
   "type": "library",
   "keywords": [
     "zf2",
