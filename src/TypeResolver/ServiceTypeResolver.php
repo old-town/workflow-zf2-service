@@ -1,22 +1,22 @@
 <?php
 /**
- * @link https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace OldTown\Workflow\ZF2\ServiceEngine\TypeResolver;
+namespace OldTown\Workflow\ZF2\Service\TypeResolver;
 
 use OldTown\Workflow\ConditionInterface;
 use OldTown\Workflow\FunctionProviderInterface;
 use OldTown\Workflow\RegisterInterface;
 use OldTown\Workflow\TypeResolverInterface;
 use OldTown\Workflow\ValidatorInterface;
-use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager;
-use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver\WrapperInterface;
+use OldTown\Workflow\ZF2\Service\Service\Manager;
+use OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver\WrapperInterface;
 
 /**
  * Class ManagerFactory
  *
- * @package OldTown\Workflow\ZF2\ServiceEngine\Service
+ * @package OldTown\Workflow\ZF2\Service\Service
  */
 class ServiceTypeResolver implements TypeResolverInterface
 {

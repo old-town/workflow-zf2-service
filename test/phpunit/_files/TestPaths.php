@@ -1,14 +1,14 @@
 <?php
 /**
- * @link    https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link    https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace OldTown\Workflow\ZF2\ServiceEngine\PhpUnit\TestData;
+namespace OldTown\Workflow\ZF2\Service\PhpUnit\TestData;
 
 /**
  * Class TestPaths
  *
- * @package OldTown\Workflow\ZF2\ServiceEngine\PhpUnit\TestData
+ * @package OldTown\Workflow\ZF2\Service\PhpUnit\TestData
  */
 class TestPaths
 {

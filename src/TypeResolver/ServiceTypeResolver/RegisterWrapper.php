@@ -1,9 +1,9 @@
 <?php
 /**
- * @link https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver;
+namespace OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver;
 
 use OldTown\PropertySet\PropertySetInterface;
 use OldTown\Workflow\RegisterInterface;
@@ -14,7 +14,7 @@ use OldTown\Workflow\WorkflowContextInterface;
 /**
  * Class RegisterWrapper
  *
- * @package OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver
+ * @package OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver
  */
 class RegisterWrapper extends AbstractWrapper implements RegisterInterface
 {

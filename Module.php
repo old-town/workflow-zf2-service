@@ -1,9 +1,9 @@
 <?php
 /**
- * @link https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace OldTown\Workflow\ZF2\ServiceEngine;
+namespace OldTown\Workflow\ZF2\Service;
 
 
 use OldTown\Workflow\ZF2\Service\Workflow;
@@ -18,10 +18,10 @@ use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ModuleManager\Listener\ServiceListenerInterface;
-use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager;
-use OldTown\Workflow\ZF2\ServiceEngine\Service\ProviderInterface;
+use OldTown\Workflow\ZF2\Service\Service\Manager;
+use OldTown\Workflow\ZF2\Service\Service\ProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
-use OldTown\Workflow\ZF2\ServiceEngine\Listener\InjectTypeResolver;
+use OldTown\Workflow\ZF2\Service\Listener\InjectTypeResolver;
 
 
 /**
@@ -102,7 +102,7 @@ class Module implements
      *
      * @param ModuleManagerInterface $manager
      * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
-     * @throws \OldTown\Workflow\ZF2\ServiceEngine\Exception\ErrorInitModuleException
+     * @throws \OldTown\Workflow\ZF2\Service\Exception\ErrorInitModuleException
      */
     public function init(ModuleManagerInterface $manager)
     {

@@ -1,14 +1,14 @@
 <?php
 /**
- * @link    https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link    https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace OldTown\Workflow\ZF2\ServiceEngine\Behat\Test\Service;
+namespace OldTown\Workflow\ZF2\Service\Behat\Test\Service;
 
 /**
  * Class TestService
  *
- * @package OldTown\Workflow\ZF2\ServiceEngine\Behat\Test\Service
+ * @package OldTown\Workflow\ZF2\Service\Behat\Test\Service
  */
 class TestService
 {

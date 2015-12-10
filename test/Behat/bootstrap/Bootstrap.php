@@ -1,9 +1,9 @@
 <?php
 /**
- * @link    https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link    https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace OldTown\Workflow\ZF2\ServiceEngine\Behat\Test;
+namespace OldTown\Workflow\ZF2\Service\Behat\Test;
 
 use Zend\Loader\AutoloaderFactory;
 
@@ -58,8 +58,8 @@ class Bootstrap
                 'Zend\Loader\StandardAutoloader' => [
                     'autoregister_zf' => true,
                     'namespaces' => [
-                        'OldTown\\Workflow\\ZF2\\ServiceEngine' =>  __DIR__ . '/../../../src',
-                        'OldTown\\Workflow\\ZF2\\ServiceEngine\\Behat\\Test\\Service' => __DIR__ . '/../test-service',
+                        'OldTown\\Workflow\\ZF2\\Service' =>  __DIR__ . '/../../../src',
+                        'OldTown\\Workflow\\ZF2\\Service\\Behat\\Test\\Service' => __DIR__ . '/../test-service',
                     ]
                 ]
             ]);

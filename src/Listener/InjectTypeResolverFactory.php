@@ -1,20 +1,20 @@
 <?php
 /**
- * @link https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace OldTown\Workflow\ZF2\ServiceEngine\Listener;
+namespace OldTown\Workflow\ZF2\Service\Listener;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager;
-use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ChainTypeResolver;
-use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver;
+use OldTown\Workflow\ZF2\Service\Service\Manager;
+use OldTown\Workflow\ZF2\Service\TypeResolver\ChainTypeResolver;
+use OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver;
 
 /**
  * Class InjectTypeResolverFactory
  *
- * @package OldTown\Workflow\ZF2\ServiceEngine\Listener
+ * @package OldTown\Workflow\ZF2\Service\Listener
  */
 class InjectTypeResolverFactory implements  FactoryInterface
 {
@@ -24,7 +24,7 @@ class InjectTypeResolverFactory implements  FactoryInterface
      * @return InjectTypeResolver
      *
      * @throws \Zend\ServiceManager\Exception\ServiceNotFoundException
-     * @throws \OldTown\Workflow\ZF2\ServiceEngine\Listener\Exception\InvalidArgumentException
+     * @throws \OldTown\Workflow\ZF2\Service\Listener\Exception\InvalidArgumentException
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

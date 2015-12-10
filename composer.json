@@ -1,5 +1,5 @@
 {
-  "name": "old-town/workflow-zf2-serviceEngine",
+  "name": "old-town/workflow-zf2-service",
   "description": "Workflow service engine",
   "type": "library",
   "keywords": [
@@ -42,7 +42,7 @@
   },
   "autoload": {
     "psr-4": {
-      "OldTown\\Workflow\\ZF2\\ServiceEngine\\": "src/"
+      "OldTown\\Workflow\\ZF2\\Service\\": "src/"
     },
     "classmap": [
       "./Module.php"
@@ -50,8 +50,8 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "OldTown\\Workflow\\ZF2\\ServiceEngine\\PhpUnit\\Test\\": "test/phpunit/tests",
-      "OldTown\\Workflow\\ZF2\\ServiceEngine\\PhpUnit\\TestData\\": "test/phpunit/_files"
+      "OldTown\\Workflow\\ZF2\\Service\\PhpUnit\\Test\\": "test/phpunit/tests",
+      "OldTown\\Workflow\\ZF2\\Service\\PhpUnit\\TestData\\": "test/phpunit/_files"
     },
     "classmap": [
       "./test/phpunit/Bootstrap.php"

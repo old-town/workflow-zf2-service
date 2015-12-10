@@ -1,18 +1,18 @@
 <?php
 /**
- * @link    https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link    https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace OldTown\Workflow\ZF2\ServiceEngine\PhpUnit\Test;
+namespace OldTown\Workflow\ZF2\Service\PhpUnit\Test;
 
-use OldTown\Workflow\ZF2\ServiceEngine\PhpUnit\TestData\TestPaths;
+use OldTown\Workflow\ZF2\Service\PhpUnit\TestData\TestPaths;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
 
 /**
  * Class ModuleTest
  *
- * @package OldTown\Workflow\ZF2\ServiceEngine\PhpUnit\Test
+ * @package OldTown\Workflow\ZF2\Service\PhpUnit\Test
  */
 class ModuleTest extends AbstractHttpControllerTestCase
 {
@@ -26,6 +26,6 @@ class ModuleTest extends AbstractHttpControllerTestCase
         $this->setApplicationConfig(
             include TestPaths::getPathToDefaultAppConfig()
         );
-        $this->assertModulesLoaded(['OldTown\Workflow\ZF2\ServiceEngine']);
+        $this->assertModulesLoaded(['OldTown\Workflow\ZF2\Service']);
     }
 }

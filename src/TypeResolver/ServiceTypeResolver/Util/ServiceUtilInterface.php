@@ -1,16 +1,16 @@
 <?php
 /**
- * @link https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver\Util;
+namespace OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver\Util;
 
 use OldTown\Workflow\TransientVars\TransientVarsInterface;
 
 /**
  * Interface WrapperInterface
  *
- * @package OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver\Util
+ * @package OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver\Util
  */
 interface ServiceUtilInterface
 {

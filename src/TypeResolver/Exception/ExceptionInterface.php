@@ -1,16 +1,16 @@
 <?php
 /**
- * @link https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace  OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\Exception;
+namespace  OldTown\Workflow\ZF2\Service\TypeResolver\Exception;
 
-use \OldTown\Workflow\ZF2\ServiceEngine\Exception\ExceptionInterface as BaseException;
+use \OldTown\Workflow\ZF2\Service\Exception\ExceptionInterface as BaseException;
 
 /**
  * Interface ExceptionInterface
  *
- * @package OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\Exception
+ * @package OldTown\Workflow\ZF2\Service\TypeResolver\Exception
  */
 interface ExceptionInterface extends BaseException
 {

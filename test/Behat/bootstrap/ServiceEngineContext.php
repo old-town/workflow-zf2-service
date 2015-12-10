@@ -1,6 +1,6 @@
 <?php
 /**
- * @link https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
 
@@ -17,9 +17,9 @@ use OldTown\Workflow\ZF2\Event\WorkflowManagerEvent;
 
 
 /**
- * Class WorkflowEngineContext
+ * Class ServiceContext
  */
-class ServiceEngineContext extends AbstractHttpControllerTestCase implements Context, SnippetAcceptingContext
+class ServiceContext extends AbstractHttpControllerTestCase implements Context, SnippetAcceptingContext
 {
     /**
      * @var array

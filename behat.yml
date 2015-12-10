@@ -2,10 +2,10 @@ default:
   autoload:
     '': %paths.base%/test/Behat/bootstrap/
   suites:
-    serviceEngine:
+    service:
       paths: [%paths.base%/test/Behat/features/service-engine]
       contexts:
-        - ServiceEngineContext
+        - ServiceContext
   extensions:
     VIPSoft\CodeCoverageExtension\Extension:
       drivers: [local]

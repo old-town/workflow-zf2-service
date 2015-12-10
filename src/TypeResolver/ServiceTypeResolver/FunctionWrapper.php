@@ -1,9 +1,9 @@
 <?php
 /**
- * @link https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver;
+namespace OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver;
 
 use OldTown\PropertySet\PropertySetInterface;
 use OldTown\Workflow\FunctionProviderInterface;
@@ -13,7 +13,7 @@ use Traversable;
 /**
  * Class FunctionWrapper
  *
- * @package OldTown\Workflow\ZF2\ServiceEngine\TypeResolver
+ * @package OldTown\Workflow\ZF2\Service\TypeResolver
  */
 class FunctionWrapper extends AbstractWrapper implements FunctionProviderInterface
 {

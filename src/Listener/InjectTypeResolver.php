@@ -1,23 +1,23 @@
 <?php
 /**
- * @link https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace OldTown\Workflow\ZF2\ServiceEngine\Listener;
+namespace OldTown\Workflow\ZF2\Service\Listener;
 
 use OldTown\Workflow\ZF2\Event\WorkflowManagerEvent;
-use OldTown\Workflow\ZF2\ServiceEngine\Event\WorkflowTypeResolverEvent;
+use OldTown\Workflow\ZF2\Service\Event\WorkflowTypeResolverEvent;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventManagerAwareTrait;
 use Zend\EventManager\EventManagerInterface;
-use OldTown\Workflow\ZF2\ServiceEngine\Service\Manager as WorkflowServiceManager;
-use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ChainTypeResolverInterface;
-use OldTown\Workflow\ZF2\ServiceEngine\TypeResolver\ServiceTypeResolver;
+use OldTown\Workflow\ZF2\Service\Service\Manager as WorkflowServiceManager;
+use OldTown\Workflow\ZF2\Service\TypeResolver\ChainTypeResolverInterface;
+use OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver;
 
 /**
  * Class InjectTypeResolver
  *
- * @package OldTown\Workflow\ZF2\ServiceEngine\Listener
+ * @package OldTown\Workflow\ZF2\Service\Listener
  */
 class InjectTypeResolver extends AbstractListenerAggregate
 {
