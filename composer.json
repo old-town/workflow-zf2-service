@@ -39,7 +39,9 @@
     "zendframework/zend-json": "~2.4.0",
     "zendframework/zend-config": "~2.4.0",
     "zendframework/zend-version": "~2.4.0",
-    "satooshi/php-coveralls": "dev-master"
+    "satooshi/php-coveralls": "dev-master",
+    "behat/behat": "~3.0",
+    "vipsoft/code-coverage-extension": "~3@dev"
   },
   "autoload": {
     "psr-4": {

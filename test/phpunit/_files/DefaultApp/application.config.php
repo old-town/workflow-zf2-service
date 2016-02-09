@@ -4,6 +4,7 @@ use \OldTown\Workflow\ZF2\Service\PhpUnit\TestData\TestPaths;
 
 return [
     'modules' => [
+        'OldTown\\Workflow\\ZF2',
         'OldTown\\Workflow\\ZF2\\Service'
     ],
     'module_listener_options' => [
