@@ -5,8 +5,9 @@
   "keywords": [
     "zf2",
     "workflow",
-    "zf2 module",
-    "view"
+    "zf2",
+    "module",
+    "service"
   ],
   "license": "GPL-3.0",
   "authors": [
@@ -28,7 +29,7 @@
   },
   "require-dev": {
     "fabpot/php-cs-fixer": "1.9.1",
-    "phpunit/phpunit": "4.7.7",
+    "phpunit/phpunit": "~4.8",
     "phpunit/phpcov": "2.0.1",
     "zendframework/zend-loader": "~2.4.0",
     "zendframework/zend-test": "~2.4.0",
