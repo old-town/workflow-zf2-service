@@ -12,7 +12,7 @@ use OldTown\Workflow\Basic\BasicWorkflow;
 use OldTown\Workflow\Loader\CallbackWorkflowFactory;
 use Behat\Gherkin\Node\TableNode;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
-use OldTown\Workflow\ZF2\Service\Workflow as WorkflowService;
+use OldTown\Workflow\ZF2\ServiceEngine\Workflow as WorkflowService;
 use OldTown\Workflow\ZF2\Event\WorkflowManagerEvent;
 
 
