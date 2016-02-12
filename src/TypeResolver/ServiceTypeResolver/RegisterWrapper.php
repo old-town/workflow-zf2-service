@@ -25,19 +25,20 @@ class RegisterWrapper extends AbstractWrapper implements RegisterInterface
      * @param PropertySetInterface     $ps
      *
      * @return mixed
+     *
+     * @throws \OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver\Exception\RuntimeException
      */
     public function registerVariable(WorkflowContextInterface $context, WorkflowEntryInterface $entry, array $args = [], PropertySetInterface $ps)
     {
-        $serviceUtil = static::getServiceUtil();
+        $serviceUtil = $this->getServiceUtil();
         $service = $this->getService();
         $transientVars = new BaseTransientVars([
             'context' => $context,
             'entry' => $entry
         ]);
-        $listArguments = $serviceUtil->buildArgumentsForService($service, $transientVars, $args);
+        $metadata = $this->getMetadata();
+        $listArguments = $serviceUtil->buildArgumentsForService($service, $metadata, $transientVars, $args);
 
-        $result = call_user_func_array($service, $listArguments);
-
-        return $result;
+        return call_user_func_array($service, $listArguments);
     }
 }

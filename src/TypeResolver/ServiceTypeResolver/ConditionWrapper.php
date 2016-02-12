@@ -22,15 +22,16 @@ class ConditionWrapper extends AbstractWrapper implements ConditionInterface
      * @param PropertySetInterface   $ps
      *
      * @return bool
+     *
+     * @throws \OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver\Exception\RuntimeException
      */
     public function passesCondition(TransientVarsInterface $transientVars, array $args = [], PropertySetInterface $ps)
     {
-        $serviceUtil = static::getServiceUtil();
+        $serviceUtil = $this->getServiceUtil();
         $service = $this->getService();
-        $listArguments = $serviceUtil->buildArgumentsForService($service, $transientVars, $args);
+        $metadata = $this->getMetadata();
+        $listArguments = $serviceUtil->buildArgumentsForService($service, $metadata, $transientVars, $args);
 
-        $result = (boolean)call_user_func_array($service, $listArguments);
-
-        return $result;
+        return (boolean)call_user_func_array($service, $listArguments);
     }
 }

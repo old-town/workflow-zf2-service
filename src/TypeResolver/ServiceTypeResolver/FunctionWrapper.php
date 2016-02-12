@@ -21,19 +21,51 @@ class FunctionWrapper extends AbstractWrapper implements FunctionProviderInterfa
      * @param TransientVarsInterface $transientVars
      * @param array                  $args
      * @param PropertySetInterface   $ps
+     *
+     * @throws \OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver\Exception\RuntimeException
+     * @throws \OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver\Exception\NoVariableForResultException
+     * @throws \OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver\Exception\InvalidFunctionResultException
+     * @throws \OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver\Exception\InvalidMapResultException
      */
     public function execute(TransientVarsInterface $transientVars, array $args = [], PropertySetInterface $ps)
     {
-        $serviceUtil = static::getServiceUtil();
+        $serviceUtil = $this->getServiceUtil();
         $service = $this->getService();
-        $listArguments = $serviceUtil->buildArgumentsForService($service, $transientVars, $args);
+
+        $metadata = $this->getMetadata();
+
+        $listArguments = $serviceUtil->buildArgumentsForService($service, $metadata, $transientVars, $args);
 
         $result = call_user_func_array($service, $listArguments);
 
-        if ($result instanceof Traversable) {
-            foreach ($result as $key => $value) {
-                $transientVars[$key] = $value;
+        if ($metadata->getFlagUseResultMap()) {
+            if (!is_array($result) && !$result instanceof Traversable) {
+                $errMsg = 'Invalid function result';
+                throw new Exception\InvalidFunctionResultException($errMsg);
             }
+            foreach ($result as $key => $value) {
+                if (!$metadata->hasResultMap($key)) {
+                    $errMsg = sprintf('Map data for "%s" not found', $key);
+                    throw new Exception\InvalidMapResultException($errMsg);
+                }
+                $mapData = $metadata->getResultMapByFrom($key);
+
+                $to = $mapData->getTo();
+                if ($transientVars->offsetExists($to) && false === $mapData->getOverride()) {
+                    $errMsg = sprintf('Data already exist named %s', $to);
+                    throw new Exception\InvalidMapResultException($errMsg);
+                }
+                $transientVars[$to] = $value;
+            }
+        }
+
+        $resultVariableName = $metadata->getResultVariableName();
+        if (null !== $resultVariableName) {
+            if ($transientVars->offsetExists($resultVariableName) && false === $metadata->isAllowOverrideResult()) {
+                $errMsg = sprintf('Data already exist named %s', $resultVariableName);
+                throw new Exception\InvalidMapResultException($errMsg);
+            }
+            $transientVars[$resultVariableName] = $result;
         }
     }
 }

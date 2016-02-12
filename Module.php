@@ -16,12 +16,17 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\ModuleManager\Feature\ConfigProviderInterface;
 use Zend\ModuleManager\Feature\BootstrapListenerInterface;
 use Zend\ModuleManager\Feature\InitProviderInterface;
+use Zend\ServiceManager\ServiceLocatorAwareTrait;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ModuleManager\Listener\ServiceListenerInterface;
 use OldTown\Workflow\ZF2\Service\Service\Manager;
 use OldTown\Workflow\ZF2\Service\Service\ProviderInterface;
 use Zend\ModuleManager\Feature\DependencyIndicatorInterface;
 use OldTown\Workflow\ZF2\Service\Listener\InjectTypeResolver;
+use Zend\ModuleManager\Feature\LocatorRegisteredInterface;
+use OldTown\Workflow\ZF2\Service\Metadata\MetadataReaderManagerInterface;
+use OldTown\Workflow\ZF2\Service\Options\ModuleOptions;
+use ReflectionClass;
 
 
 /**
@@ -34,8 +39,10 @@ class Module implements
     ConfigProviderInterface,
     AutoloaderProviderInterface,
     InitProviderInterface,
-    DependencyIndicatorInterface
+    DependencyIndicatorInterface,
+    LocatorRegisteredInterface
 {
+    use ServiceLocatorAwareTrait;
 
     /**
      * Имя секции в конфиги приложения
@@ -43,6 +50,13 @@ class Module implements
      * @var string
      */
     const CONFIG_KEY = 'workflow_zf2_serviceEngine';
+
+    /**
+     * Менеджер для работы с метаданными сервисов
+     *
+     * @var MetadataReaderManagerInterface
+     */
+    protected $metadataReaderManager;
 
     /**
      * @return array
@@ -91,7 +105,7 @@ class Module implements
         return array(
             'Zend\Loader\StandardAutoloader' => array(
                 'namespaces' => array(
-                    __NAMESPACE__ => __DIR__ . '/src/',
+                    __NAMESPACE__ => stream_resolve_include_path(__DIR__ . '/src/'),
                 ),
             ),
         );
@@ -115,6 +129,8 @@ class Module implements
         /** @var ServiceLocatorInterface $sm */
         $sm = $manager->getEvent()->getParam('ServiceManager');
 
+        $this->setServiceLocator($sm);
+
         /** @var ServiceListenerInterface $serviceListener */
         $serviceListener = $sm->get('ServiceListener');
         $serviceListener->addServiceManager(
@@ -124,6 +140,56 @@ class Module implements
             'getWorkflowServiceConfig'
         );
     }
+
+    /**
+     * Менеджер для работы с метаданными сервисов
+     *
+     * @return MetadataReaderManagerInterface
+     *
+     * @throws Exception\ErrorInitModuleException
+     */
+    public function getMetadataReaderManager()
+    {
+        if ($this->metadataReaderManager) {
+            return $this->metadataReaderManager;
+        }
+
+        try {
+            $sl = $this->getServiceLocator();
+            /** @var ModuleOptions $moduleOptions */
+            $moduleOptions = $sl->get(ModuleOptions::class);
+
+            $className = $moduleOptions->getMetadataReaderManagerClassName();
+
+            $r = new \ReflectionClass($className);
+            $instance = $r->newInstance();
+
+            if (!$instance instanceof MetadataReaderManagerInterface) {
+                $errMsg = sprintf('Metadata reader manager not implement %s', MetadataReaderManagerInterface::class);
+                throw new Exception\ErrorInitModuleException($errMsg);
+            }
+            $this->metadataReaderManager = $instance;
+        } catch (\Exception $e) {
+            throw new Exception\ErrorInitModuleException($e->getMessage(), $e->getCode(), $e);
+        }
+
+        return $this->metadataReaderManager;
+    }
+
+    /**
+     * Устанавливает менеджер для работы с метаданными сервисов
+     *
+     * @param MetadataReaderManagerInterface $metadataReaderManager
+     *
+     * @return $this
+     */
+    public function setMetadataReaderManager(MetadataReaderManagerInterface $metadataReaderManager)
+    {
+        $this->metadataReaderManager = $metadataReaderManager;
+
+        return $this;
+    }
+
 
 
 

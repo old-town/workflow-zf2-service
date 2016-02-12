@@ -6,6 +6,7 @@
 namespace OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver\Util;
 
 use OldTown\Workflow\TransientVars\TransientVarsInterface;
+use OldTown\Workflow\ZF2\Service\Metadata\Storage\MetadataInterface;
 
 /**
  * Interface WrapperInterface
@@ -26,10 +27,11 @@ interface ServiceUtilInterface
      * Подготавливает список аргументов, для вызова сервиса
      *
      * @param callable               $service
+     * @param MetadataInterface      $metadata
      * @param TransientVarsInterface $transientVars
      * @param array                  $args
      *
      * @return array
      */
-    public function buildArgumentsForService(callable $service, TransientVarsInterface $transientVars, array $args = []);
+    public function buildArgumentsForService(callable $service, MetadataInterface $metadata, TransientVarsInterface $transientVars, array $args = []);
 }

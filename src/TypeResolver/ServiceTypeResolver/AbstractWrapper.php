@@ -7,6 +7,10 @@ namespace OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver;
 
 use OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver\Util\ServiceUtil;
 use OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver\Util\ServiceUtilInterface;
+use ReflectionClass;
+use OldTown\Workflow\ZF2\Service\Metadata\Storage\MetadataInterface;
+
+
 
 /**
  * Class AbstractWrapper
@@ -21,16 +25,34 @@ abstract class AbstractWrapper implements WrapperInterface
     protected $service;
 
     /**
+     * Набор утилит для запуска сервисов workflow
+     *
      * @var ServiceUtilInterface
      */
-    protected static $serviceUtil;
+    protected $serviceUtil;
 
     /**
-     * @param callable $service
+     * Имя класса, реалузующего набор утилит для запуска сервисов workflow
+     *
+     * @var string
      */
-    public function __construct(callable $service)
+    protected $serviceUtilClassName = ServiceUtil::class;
+
+    /**
+     * Метаданные сервиса
+     *
+     * @var MetadataInterface
+     */
+    protected $metadata;
+
+    /**
+     * @param callable          $service
+     * @param MetadataInterface $metadata
+     */
+    public function __construct(callable $service, MetadataInterface $metadata)
     {
         $this->service = $service;
+        $this->metadata = $metadata;
     }
 
     /**
@@ -42,21 +64,75 @@ abstract class AbstractWrapper implements WrapperInterface
     }
 
     /**
-     * @return ServiceUtilInterface
+     * Метаданные сервиса
+     *
+     * @return MetadataInterface
      */
-    public static function getServiceUtil()
+    public function getMetadata()
     {
-        if (null === static::$serviceUtil) {
-            static::$serviceUtil = new ServiceUtil();
+        return $this->metadata;
+    }
+
+
+    /**
+     * Набор утилит для запуска сервисов workflow
+     *
+     * @return ServiceUtilInterface
+     *
+     * @throws Exception\RuntimeException
+     */
+    public function getServiceUtil()
+    {
+        if ($this->serviceUtil) {
+            return $this->serviceUtil;
         }
-        return static::$serviceUtil;
+
+        $className = $this->getServiceUtilClassName();
+        $r = new ReflectionClass($className);
+        $instance = $r->newInstance();
+
+        if (!$instance instanceof ServiceUtilInterface) {
+            $errMsg = sprintf('Service util not implement %s', ServiceUtilInterface::class);
+            throw new Exception\RuntimeException($errMsg);
+        }
+        $this->serviceUtil = $instance;
+
+        return $this->serviceUtil;
     }
 
     /**
+     * Устанавливает набор утилит для запуска сервисов workflow
+     *
      * @param ServiceUtilInterface $serviceUtil
+     *
+     * @return $this
      */
-    public static function setServiceUtil(ServiceUtilInterface $serviceUtil)
+    public function setServiceUtil(ServiceUtilInterface $serviceUtil)
     {
-        static::$serviceUtil = $serviceUtil;
+        $this->serviceUtil = $serviceUtil;
+        $this->serviceUtilClassName = get_class($serviceUtil);
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getServiceUtilClassName()
+    {
+        return $this->serviceUtilClassName;
+    }
+
+    /**
+     * @param string $serviceUtilClassName
+     *
+     * @return $this
+     */
+    public function setServiceUtilClassName($serviceUtilClassName)
+    {
+        $this->serviceUtilClassName = (string)$serviceUtilClassName;
+        $this->serviceUtil = null;
+
+        return $this;
     }
 }

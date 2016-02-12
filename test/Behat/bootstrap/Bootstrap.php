@@ -53,13 +53,14 @@ class Bootstrap
             include $vendorPath . '/autoload.php';
         }
 
+
         try {
             AutoloaderFactory::factory([
                 'Zend\Loader\StandardAutoloader' => [
                     'autoregister_zf' => true,
                     'namespaces' => [
-                        'OldTown\\Workflow\\ZF2\\Service' =>  __DIR__ . '/../../../src',
-                        'OldTown\\Workflow\\ZF2\\Service\\Behat\\Test\\Service' => __DIR__ . '/../test-service',
+                        'OldTown\\Workflow\\ZF2\\Service' =>  stream_resolve_include_path(__DIR__ . '/../../../src'),
+                        'OldTown\\Workflow\\ZF2\\Service\\Behat\\Test\\Service' => stream_resolve_include_path(__DIR__ . '/../test-service'),
                     ]
                 ]
             ]);

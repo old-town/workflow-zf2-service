@@ -8,12 +8,22 @@ Feature: ZF2 service for workflow
 <!DOCTYPE workflow PUBLIC "-//OpenSymphony Group//DTD OSWorkflow 2.6//EN"
         "http://www.opensymphony.com/osworkflow/workflow_2_8.dtd">
 <workflow>
+    <registers>
+        <register type="phpshell" variable-name="testVariable1">
+            <arg name="script">return "test_value1";</arg>
+        </register>
+        <register type="phpshell" variable-name="testVariable2">
+            <arg name="script">return "test_value2";</arg>
+        </register>
+    </registers>
     <initial-actions>
         <action id="100" name="StartWorkflow">
             <pre-functions>
                 <function type="service">
                     <arg name="serviceName">callbackService</arg>
                     <arg name="serviceMethod">dispatch</arg>
+                    <arg name="argName1AliasSource">testVariable1</arg>
+                    <arg name="argName2AliasSource">testVariable2</arg>
                 </function>
             </pre-functions>
             <results>

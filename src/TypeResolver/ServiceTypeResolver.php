@@ -12,6 +12,8 @@ use OldTown\Workflow\TypeResolverInterface;
 use OldTown\Workflow\ValidatorInterface;
 use OldTown\Workflow\ZF2\Service\Service\Manager;
 use OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver\WrapperInterface;
+use OldTown\Workflow\ZF2\Service\Metadata\Reader\ReaderInterface;
+use ReflectionClass;
 
 /**
  * Class ManagerFactory
@@ -42,6 +44,11 @@ class ServiceTypeResolver implements TypeResolverInterface
     protected $workflowServiceManager;
 
     /**
+     * @var ReaderInterface
+     */
+    protected $metadataReader;
+
+    /**
      * @param array $options
      */
     public function __construct(array $options = [])
@@ -50,11 +57,13 @@ class ServiceTypeResolver implements TypeResolverInterface
     }
 
     /**
-     * @param Manager $serviceManager
+     * @param Manager         $serviceManager
+     * @param ReaderInterface $metadataReader
      */
-    protected function init(Manager $serviceManager)
+    protected function init(Manager $serviceManager, ReaderInterface $metadataReader)
     {
         $this->workflowServiceManager = $serviceManager;
+        $this->metadataReader = $metadataReader;
     }
 
     /**
@@ -138,6 +147,14 @@ class ServiceTypeResolver implements TypeResolverInterface
     }
 
     /**
+     * @return ReaderInterface
+     */
+    public function getMetadataReader()
+    {
+        return $this->metadataReader;
+    }
+
+    /**
      * @param       $type
      * @param array $args
      * @param       $classWrapper
@@ -176,9 +193,13 @@ class ServiceTypeResolver implements TypeResolverInterface
             throw new Exception\InvalidServiceException($errMsg);
         }
 
-        $r = new \ReflectionClass($classWrapper);
+        $serviceClassName = get_class($service);
+        $serviceMetadata = $this->getMetadataReader()->loadMetadataForClassService($serviceClassName, $serviceMethod);
+
+        $r = new ReflectionClass($classWrapper);
         $wrapper = $r->newInstanceArgs([
-            'service' => $serviceCallback
+            'service' => $serviceCallback,
+            'metadata' => $serviceMetadata
         ]);
 
         return $wrapper;

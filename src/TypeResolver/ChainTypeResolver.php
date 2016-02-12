@@ -74,9 +74,10 @@ class ChainTypeResolver implements ChainTypeResolverInterface
      */
     public function getValidator($type, array $args = [])
     {
-        while ($this->chain->valid()) {
+        $chain = clone $this->chain;
+        while ($chain) {
             /** @var TypeResolverInterface $resolver */
-            $resolver = $this->chain->current();
+            $resolver = $chain->current();
             try {
                 $validator = $resolver->getValidator($type, $args);
                 if ($validator instanceof ValidatorInterface) {
@@ -87,7 +88,7 @@ class ChainTypeResolver implements ChainTypeResolverInterface
                     throw new Exception\RuntimeException($e->getMessage(), $e->getCode(), $e);
                 }
             }
-            $this->chain->next();
+            $chain->next();
         }
 
         $errMsg = sprintf('Validator for type %s not found', $type);
@@ -105,9 +106,10 @@ class ChainTypeResolver implements ChainTypeResolverInterface
      */
     public function getRegister($type, array $args = [])
     {
-        while ($this->chain->valid()) {
+        $chain = clone $this->chain;
+        while ($chain) {
             /** @var TypeResolverInterface $resolver */
-            $resolver = $this->chain->current();
+            $resolver = $chain->current();
             try {
                 $register = $resolver->getRegister($type, $args);
                 if ($register instanceof RegisterInterface) {
@@ -118,7 +120,7 @@ class ChainTypeResolver implements ChainTypeResolverInterface
                     throw new Exception\RuntimeException($e->getMessage(), $e->getCode(), $e);
                 }
             }
-            $this->chain->next();
+            $chain->next();
         }
 
         $errMsg = sprintf('Register for type %s not found', $type);
@@ -136,9 +138,10 @@ class ChainTypeResolver implements ChainTypeResolverInterface
      */
     public function getFunction($type, array $args = [])
     {
-        while ($this->chain->valid()) {
+        $chain = clone $this->chain;
+        while ($chain) {
             /** @var TypeResolverInterface $resolver */
-            $resolver = $this->chain->current();
+            $resolver = $chain->current();
             try {
                 $function = $resolver->getFunction($type, $args);
                 if ($function instanceof FunctionProviderInterface) {
@@ -149,7 +152,7 @@ class ChainTypeResolver implements ChainTypeResolverInterface
                     throw new Exception\RuntimeException($e->getMessage(), $e->getCode(), $e);
                 }
             }
-            $this->chain->next();
+            $chain->next();
         }
 
         $errMsg = sprintf('Function for type %s not found', $type);
@@ -167,9 +170,10 @@ class ChainTypeResolver implements ChainTypeResolverInterface
      */
     public function getCondition($type, array $args = [])
     {
-        while ($this->chain->valid()) {
+        $chain = clone $this->chain;
+        while ($chain) {
             /** @var TypeResolverInterface $resolver */
-            $resolver = $this->chain->current();
+            $resolver = $chain->current();
             try {
                 $condition = $resolver->getCondition($type, $args);
                 if ($condition instanceof ConditionInterface) {
@@ -180,7 +184,7 @@ class ChainTypeResolver implements ChainTypeResolverInterface
                     throw new Exception\RuntimeException($e->getMessage(), $e->getCode(), $e);
                 }
             }
-            $this->chain->next();
+            $chain->next();
         }
 
         $errMsg = sprintf('Condition for type %s not found', $type);
