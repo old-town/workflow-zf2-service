@@ -1,7 +1,13 @@
 # workflow-zf2-service
 
+Master:
+[![Build Status](https://secure.travis-ci.org/old-town/workflow-zf2-service.svg?branch=master)](https://secure.travis-ci.org/old-town/workflow-zf2-service)
+[![Coverage Status](https://coveralls.io/repos/old-town/workflow-zf2-service/badge.svg?branch=master&service=github)](https://coveralls.io/github/old-town/workflow-zf2-service?branch=master)
+
+Develop:
 [![Build Status](https://secure.travis-ci.org/old-town/workflow-zf2-service.svg?branch=dev)](https://secure.travis-ci.org/old-town/workflow-zf2-service)
 [![Coverage Status](https://coveralls.io/repos/old-town/workflow-zf2-service/badge.svg?branch=dev&service=github)](https://coveralls.io/github/old-town/workflow-zf2-service?branch=dev)
+
 
 
 # Функционал модуля

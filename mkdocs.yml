@@ -1,0 +1,7 @@
+docs_dir: doc/book/ru
+pages:
+    - index.md
+site_name: workflow-zf2-service
+site_description: 'Модуль добавляет возможность использовать сервисы ZF2 в workflow. '
+repo_url: 'https://github.com/old-town/workflow-zf2-service'
+copyright: 'Copyright (c) 2016 <a href="https://github.com/old-town/">OldTown</a>'
