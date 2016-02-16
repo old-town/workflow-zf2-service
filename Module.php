@@ -32,7 +32,7 @@ use ReflectionClass;
 /**
  * Class Module
  *
- * @package OldTown\Workflow\ZF2
+ * @package OldTown\Workflow\ZF2\Service
  */
 class Module implements
     BootstrapListenerInterface,
