@@ -19,7 +19,7 @@
 бросается событие workflow.manager.create. Обработка этого события осуществляется [WorkflowDispatchListener](./src/Listener/WorkflowDispatchListener.php).
 Обработчик:
 
-* Создает [ChainTypeResolver](./src/TypeResolver/ChainTypeResolver.php)
+* Создает [ChainTypeResolver](./../../../src/TypeResolver/ChainTypeResolver.php)
 * Добавляет в него TypeResolver установленный в менеджер workflow.
 * [WorkflowDispatchListener](./src/Listener/WorkflowDispatchListener.php) с помощью своего EventManager'а бросает собыите inject.workflow.type.resolver,
 обработчики данного события должны вернуть объект TypeResolver, который в последствие будет добавлен в ChainTypeResolver
@@ -33,3 +33,14 @@
 # Сервисы
 Для работы с сервисам использвется [Manager](./src/Service/Manager.php). Это стандартный PluginManager ZF2. Все сервисы
 зарегестрированные в данном менеджере можно использовать в workflow
+
+Сервис не должен знать ничего о workflow. Сам по себе сервис это метод определенного класса. Если у класса есть 
+зависимости от другх компонентов системы, то эти зависимости должны быть явно описаны в констукторе класса.
+
+Установка звисимостей осуществляется через фабрику. Таким образом, если сервис требует передачи в констуктор 
+зависимых объектов, то сначала регистрируем сервис в \OldTown\Workflow\ZF2\Service\Service\Manager , прописывая
+ему нужную фабрику. 
+
+Фабрика имеет доступ к ServiceLocator приложения. Из ServiceLocator извлекаются необходимые данные, и передаются в констуктор.
+
+Такой подходи дает возможность писать код максимально пригодный к тестированию.
