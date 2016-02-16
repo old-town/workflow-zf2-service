@@ -12,26 +12,26 @@
 
 В данном модуле реализованы дополнительные TypeResolver:
 
-* [ChainTypeResolver](./src/TypeResolver/ChainTypeResolver.php) - резолвер позволяет построить цепочку из множества вложенных резолверов
-* [ServiceTypeResolver](./src/TypeResolver/ServiceTypeResolver.php) - резолвер добавляет поддержку новго типа "service"(сервисы ZF2)
+* \OldTown\Workflow\ZF2\Service\TypeResolver\ChainTypeResolver - резолвер позволяет построить цепочку из множества вложенных резолверов
+* \OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver - резолвер добавляет поддержку новго типа "service"(сервисы ZF2)
 
 При создание нового объекта менеджера workflow, модулем [old-town/workflow-zf2](https://github.com/old-town/workflow-zf2)
-бросается событие workflow.manager.create. Обработка этого события осуществляется [WorkflowDispatchListener](./src/Listener/WorkflowDispatchListener.php).
+бросается событие workflow.manager.create. Обработка этого события осуществляется \OldTown\Workflow\ZF2\Service\Listener\InjectTypeResolver.
 Обработчик:
 
-* Создает [ChainTypeResolver](./../../../src/TypeResolver/ChainTypeResolver.php)
+* Создает \OldTown\Workflow\ZF2\Service\TypeResolver\ChainTypeResolver
 * Добавляет в него TypeResolver установленный в менеджер workflow.
-* [WorkflowDispatchListener](./src/Listener/WorkflowDispatchListener.php) с помощью своего EventManager'а бросает собыите inject.workflow.type.resolver,
+* \OldTown\Workflow\ZF2\Service\Listener\InjectTypeResolver с помощью своего EventManager'а бросает собыите inject.workflow.type.resolver,
 обработчики данного события должны вернуть объект TypeResolver, который в последствие будет добавлен в ChainTypeResolver
-* Обработчки сам подписан на событие inject.workflow.type.resolver, в обработчике возвращается [ServiceTypeResolver](./src/TypeResolver/ServiceTypeResolver.php)
-* Устанавливает в workflow в качестве резолвера [ChainTypeResolver](./src/TypeResolver/ChainTypeResolver.php)
+* Обработчки сам подписан на событие inject.workflow.type.resolver, в обработчике возвращается \OldTown\Workflow\ZF2\Service\TypeResolver\ServiceTypeResolver
+* Устанавливает в workflow в качестве резолвера \OldTown\Workflow\ZF2\Service\TypeResolver\ChainTypeResolver
 
 Таким образом, при попытки выполнить функцию(Function), валидатор(Validator), условие(Condition) или воспользоваться регистром(Register),
 будет произведен обход ChainTypeResolver, где сначала будет отработает резовлер с наивысшим приоритетом(в данном случае ServiceTypeResolver),
 и в самую поселеднию очередь резовлер по умолчанию.
 
 # Сервисы
-Для работы с сервисам использвется [Manager](./src/Service/Manager.php). Это стандартный PluginManager ZF2. Все сервисы
+Для работы с сервисам использвется \OldTown\Workflow\ZF2\Service\Service\Manager. Это стандартный PluginManager ZF2. Все сервисы
 зарегестрированные в данном менеджере можно использовать в workflow
 
 Сервис не должен знать ничего о workflow. Сам по себе сервис это метод определенного класса. Если у класса есть 
