@@ -100,30 +100,29 @@ class ServiceUtil implements ServiceUtilInterface
 
         $argumentsMap = $metadata->getArgumentsMap();
 
-        $listMapArguments = array_values($argumentsMap);
-        $listUniqueMapArguments = array_unique($listMapArguments);
-
-        $argsName = array_keys($args);
-
-        $diff = array_diff($listUniqueMapArguments, $argsName);
-        if (0 !== count($diff)) {
-            $errMsg = sprintf('There are no arguments with names: %s', implode($diff));
-            throw new Exception\FunctionArgumentNotFoundException($errMsg);
-        }
+//        $listMapArguments = array_values($argumentsMap);
+//        $listUniqueMapArguments = array_unique($listMapArguments);
+//
+//        $argsName = array_keys($args);
+//
+//        $diff = array_diff($listUniqueMapArguments, $argsName);
+//        if (0 !== count($diff)) {
+//            $errMsg = sprintf('There are no arguments with names: %s', implode($diff));
+//            throw new Exception\FunctionArgumentNotFoundException($errMsg);
+//        }
 
 
         $arguments = [];
         foreach ($listArgument as $name => $defaultValue) {
             if (array_key_exists($name, $argumentsMap)) {
                 $argName = $argumentsMap[$name];
-                $key = $args[$argName];
-
-                if (!$transientVars->offsetExists($key)) {
-                    $errMsg = sprintf('Argument "%s" not found in transientVars', $key);
-                    throw new Exception\ArgumentNotFoundInTransientVarsException($errMsg);
+                if (array_key_exists($argName, $args)) {
+                    $key = $args[$argName];
+                    if ($transientVars->offsetExists($key)) {
+                        $arguments[$name] = $transientVars[$key];
+                        continue;
+                    }
                 }
-                $arguments[$name] = $transientVars[$key];
-                continue;
             }
 
             if ($transientVars->offsetExists($name)) {
