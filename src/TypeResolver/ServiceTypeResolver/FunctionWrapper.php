@@ -60,12 +60,14 @@ class FunctionWrapper extends AbstractWrapper implements FunctionProviderInterfa
         }
 
         $resultVariableName = $metadata->getResultVariableName();
-        if (null !== $resultVariableName) {
-            if ($transientVars->offsetExists($resultVariableName) && false === $metadata->isAllowOverrideResult()) {
-                $errMsg = sprintf('Data already exist named %s', $resultVariableName);
+        if (null !== $resultVariableName && array_key_exists($resultVariableName, $args)) {
+            $resultVariableKey = $args[$resultVariableName];
+
+            if ($transientVars->offsetExists($resultVariableKey) && false === $metadata->isAllowOverrideResult()) {
+                $errMsg = sprintf('Data already exist named %s', $resultVariableKey);
                 throw new Exception\InvalidMapResultException($errMsg);
             }
-            $transientVars[$resultVariableName] = $result;
+            $transientVars[$resultVariableKey] = $result;
         }
     }
 }
