@@ -9,7 +9,6 @@ Develop:
 [![Coverage Status](https://coveralls.io/repos/old-town/workflow-zf2-service/badge.svg?branch=dev&service=github)](https://coveralls.io/github/old-town/workflow-zf2-service?branch=dev)
 
 
-
 # Функционал модуля
 
 Модуль добавляет возможность использовать сервисы ZF2 в workflow. 
