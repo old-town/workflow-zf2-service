@@ -1,9 +1,9 @@
 <?php
 /**
- * @link    https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link    https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace OldTown\Workflow\ZF2\ServiceEngine\PhpUnit\Test;
+namespace OldTown\Workflow\ZF2\Service\PhpUnit\Test;
 
 use Zend\Loader\AutoloaderFactory;
 use Zend\Loader\StandardAutoloader;
@@ -15,7 +15,7 @@ chdir(__DIR__);
 /**
  * Class Bootstrap
  *
- * @package OldTown\Workflow\ZF2\ServiceEngine\PhpUnit\Test
+ * @package OldTown\Workflow\ZF2\Service\PhpUnit\Test
  */
 class Bootstrap
 {
@@ -56,9 +56,9 @@ class Bootstrap
                 StandardAutoloader::class => [
                     'autoregister_zf' => true,
                     'namespaces' => [
-                        'OldTown\\Workflow\\ZF2\\ServiceEngine' => __DIR__ . '/../../src/',
+                        'OldTown\\Workflow\\ZF2\\Service' => __DIR__ . '/../../src/',
                         __NAMESPACE__ => __DIR__ . '/tests/',
-                        'OldTown\\Workflow\\ZF2\\ServiceEngine\\PhpUnit\\TestData' => __DIR__ . '/_files',
+                        'OldTown\\Workflow\\ZF2\\Service\\PhpUnit\\TestData' => __DIR__ . '/_files',
                     ]
                 ]
             ]);

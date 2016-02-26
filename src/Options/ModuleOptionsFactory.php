@@ -1,18 +1,18 @@
 <?php
 /**
- * @link https://github.com/old-town/workflow-zf2-serviceEngine
+ * @link https://github.com/old-town/workflow-zf2-service
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
-namespace OldTown\Workflow\ZF2\ServiceEngine\Options;
+namespace OldTown\Workflow\ZF2\Service\Options;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use OldTown\Workflow\ZF2\ServiceEngine\Module;
+use OldTown\Workflow\ZF2\Service\Module;
 
 /**
  * Class ModuleOptionsFactory
  *
- * @package OldTown\Workflow\ZF2\ServiceEngine\Options
+ * @package OldTown\Workflow\ZF2\Service\Options
  */
 class ModuleOptionsFactory implements FactoryInterface
 {

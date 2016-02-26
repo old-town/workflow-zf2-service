@@ -1,0 +1,30 @@
+default:
+  autoload:
+    '': %paths.base%/test/Behat/bootstrap/
+  suites:
+    service:
+      paths: [%paths.base%/test/Behat/features/service]
+      contexts:
+        - ServiceContext
+  extensions:
+    VIPSoft\CodeCoverageExtension\Extension:
+      drivers: [local]
+      filter:
+        whitelist:
+          addUncoveredFilesFromWhitelist: true
+          include:
+            directories:
+              'src':
+                suffix: .php
+      report:
+        format:   php
+        options:
+          target: %paths.base%/build/logs/coverage/coverage-behat.cov
+log-coverage-html:
+  extensions:
+    VIPSoft\CodeCoverageExtension\Extension:
+      report:
+        format:   html
+        options:
+          target: %paths.base%/build/logs/coverage-report-html
+
