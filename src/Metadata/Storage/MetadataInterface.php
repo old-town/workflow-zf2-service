@@ -13,25 +13,6 @@ namespace OldTown\Workflow\ZF2\Service\Metadata\Storage;
 interface MetadataInterface
 {
     /**
-     * Добвляет элемент в карту маппинга аргументов
-     *
-     * @param $to
-     * @param $fromArgName
-     *
-     * @return $this
-     *
-     */
-    public function addArgumentMap($to, $fromArgName);
-
-    /**
-     * Возвращает карту маппинга документов
-     *
-     * @return array
-     */
-    public function getArgumentsMap();
-
-
-    /**
      * Имя переменной в transientVars, в которую нужно сохранить результаты сервиса
      *
      * @return string|null

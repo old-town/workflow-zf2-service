@@ -1,11 +1,11 @@
 default:
   autoload:
-    '': %paths.base%/test/Behat/bootstrap/
+    OldTownWorkflowZf2ServiceBehatTestBootstrap: '%paths.base%/test/Behat/bootstrap'
   suites:
     service:
       paths: [%paths.base%/test/Behat/features/service]
       contexts:
-        - ServiceContext
+        - \OldTownWorkflowZf2ServiceBehatTestBootstrap\ServiceContext
   extensions:
     VIPSoft\CodeCoverageExtension\Extension:
       drivers: [local]

@@ -39,8 +39,6 @@ class InjectTypeResolverFactory implements  FactoryInterface
             InjectTypeResolver::SERVICE_TYPE_RESOLVER => $serviceResolver
         ];
 
-        $service = new InjectTypeResolver($options);
-
-        return $service;
+        return new InjectTypeResolver($options);
     }
 }

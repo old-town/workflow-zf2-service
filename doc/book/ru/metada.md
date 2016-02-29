@@ -11,9 +11,8 @@
 Система спроектированна таким образом, что сервисы ничего не знают o workflow. Это дает большую гибкость при написание
 тестов для сервисов, а также уменьшает связанность системы.
 
-Но при таком подходе, втсает задача получения значения аргументов для функций(Function), условий(Condition), валидаторов(Validator),
- регистров(Register) из TransientVars. Также появляется необходимость, в наложение результатов работы функций(Function) в
-TransientVars. Все эти задачи решаются с помощью метаданных.
+При таком подходе, появляется необходимость, в наложение результатов работы функций(Function) в
+TransientVars. Эта задача решаются с помощью метаданных.
 
 # Общий пример использования метаданных
 
@@ -34,8 +33,8 @@ Workflow XML:
                 <function type="service">
                     <arg name="serviceName">\OldTown\Workflow\ZF2\Service\Behat\Test\Service\TestService</arg>
                     <arg name="serviceMethod">dispatch</arg>
-                    <arg name="argName1AliasSource">testVariable1</arg>
-                    <arg name="argName2AliasSource">testVariable2</arg>
+                    <arg name="testArgName1">${testVariable1}</arg>
+                    <arg name="testArgName2">${testVariable2}</arg>
                 </function>
             </pre-functions>
             <results>
@@ -80,28 +79,6 @@ class TestService
     }
 }
 
-```
-## Маппинг аргументов
-
-В приведенных выеше листинга, из wf вызывается \OldTown\Workflow\ZF2\Service\Behat\Test\Service\TestService::dispatch.
-В сигнатуре метода dispatch определенно два аргумента $testArgName1, $testArgName2.
-
-
-Предположим что в значения для аргументов $testArgName1, $testArgName2 должны взяться из TransientVars['testVariable1']
-и TransientVars['testVariable2'].
-
-С помощью метаданных мы можем указать имя аргумента, значение которого определят ключ в TransientVars, по которому можно
-получить требуемое значение.
-
-Т.е. с помощью метаданных мы должны указать, что значение аргумента $testArgName1, можно получить, если прочитать 
-значение аргумента argName1AliasSource(в нижеприведенном примере это testVariable1)
-```xml
-<function type="service">
-    <arg name="serviceName">\OldTown\Workflow\ZF2\Service\Behat\Test\Service\TestService</arg>
-    <arg name="serviceMethod">dispatch</arg>
-    <arg name="argName1AliasSource">testVariable1</arg>
-    <arg name="argName2AliasSource">testVariable2</arg>
-</function>
 ```
 
 ## Маппинг результатов

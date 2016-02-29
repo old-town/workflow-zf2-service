@@ -4,6 +4,8 @@
  * @author  Malofeykin Andrey  <and-rey2@yandex.ru>
  */
 
+namespace OldTownWorkflowZf2ServiceBehatTestBootstrap;
+
 use Behat\Behat\Context\Context;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Gherkin\Node\PyStringNode;
@@ -14,10 +16,14 @@ use Behat\Gherkin\Node\TableNode;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 use OldTown\Workflow\ZF2\ServiceEngine\Workflow as WorkflowService;
 use OldTown\Workflow\ZF2\Event\WorkflowManagerEvent;
+use RuntimeException;
+use DOMElement;
 
 
 /**
  * Class ServiceContext
+ *
+ * @package OldTownWorkflowZf2ServiceBehatTestBootstrap
  */
 class ServiceContext extends AbstractHttpControllerTestCase implements Context, SnippetAcceptingContext
 {

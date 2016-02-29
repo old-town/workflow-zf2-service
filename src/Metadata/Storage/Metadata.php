@@ -13,13 +13,6 @@ namespace OldTown\Workflow\ZF2\Service\Metadata\Storage;
 class Metadata implements MetadataInterface
 {
     /**
-     * Карта маппинга документов
-     *
-     * @var array
-     */
-    protected $argumentsMap = [];
-
-    /**
      * Имя переменной в transientVars, в которую нужно сохранить результаты сервиса
      *
      * @var string|null
@@ -53,38 +46,6 @@ class Metadata implements MetadataInterface
      * @var array
      */
     protected $resultMapHash = [];
-
-    /**
-     * Добвляет элемент в карту маппинга аргументов
-     *
-     * @param $to
-     * @param $fromArgName
-     *
-     * @return $this
-     *
-     * @throws Exception\InvalidArgumentMapException
-     */
-    public function addArgumentMap($to, $fromArgName)
-    {
-        if (array_key_exists($to, $this->argumentsMap)) {
-            $errMsg = sprintf('Map for argument "%s" already exists', $to);
-            throw new Exception\InvalidArgumentMapException($errMsg);
-        }
-
-        $this->argumentsMap[$to] = $fromArgName;
-
-        return $this;
-    }
-
-    /**
-     * Возвращает карту маппинга документов
-     *
-     * @return array
-     */
-    public function getArgumentsMap()
-    {
-        return $this->argumentsMap;
-    }
 
     /**
      * Имя переменной в transientVars, в которую нужно сохранить результаты сервиса

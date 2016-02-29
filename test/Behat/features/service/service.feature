@@ -1,7 +1,6 @@
 Feature: ZF2 service for workflow
 
-
-  Scenario: initialize workflow
+  Scenario: Test zf2 service
     Given : Registrate the workflow with the name "example". With xml:
   """
 <?xml version="1.0" encoding="UTF-8"?>
@@ -22,8 +21,8 @@ Feature: ZF2 service for workflow
                 <function type="service">
                     <arg name="serviceName">callbackService</arg>
                     <arg name="serviceMethod">dispatch</arg>
-                    <arg name="argName1AliasSource">testVariable1</arg>
-                    <arg name="argName2AliasSource">testVariable2</arg>
+                    <arg name="testArgName1">${testVariable1}</arg>
+                    <arg name="testArgName2">${testVariable2}</arg>
                 </function>
             </pre-functions>
             <results>

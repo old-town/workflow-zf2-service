@@ -98,8 +98,6 @@ class ServiceUtil implements ServiceUtilInterface
     {
         $listArgument = $this->getListArgumentForService($service);
 
-        $argumentsMap = $metadata->getArgumentsMap();
-
 //        $listMapArguments = array_values($argumentsMap);
 //        $listUniqueMapArguments = array_unique($listMapArguments);
 //
@@ -114,22 +112,6 @@ class ServiceUtil implements ServiceUtilInterface
 
         $arguments = [];
         foreach ($listArgument as $name => $defaultValue) {
-            if (array_key_exists($name, $argumentsMap)) {
-                $argName = $argumentsMap[$name];
-                if (array_key_exists($argName, $args)) {
-                    $key = $args[$argName];
-                    if ($transientVars->offsetExists($key)) {
-                        $arguments[$name] = $transientVars[$key];
-                        continue;
-                    }
-                }
-            }
-
-            if ($transientVars->offsetExists($name)) {
-                $arguments[$name] = $transientVars[$name];
-                continue;
-            }
-
             if (array_key_exists($name, $args)) {
                 $arguments[$name] = $args[$name];
                 continue;

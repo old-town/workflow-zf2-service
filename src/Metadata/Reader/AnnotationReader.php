@@ -12,7 +12,6 @@ use Doctrine\Common\Annotations\AnnotationReader as DoctrineAnnotationReader;
 use OldTown\Workflow\ZF2\Service\Metadata\Storage\Metadata;
 use ReflectionClass;
 use OldTown\Workflow\ZF2\Service\Annotation;
-use OldTown\Workflow\ZF2\Service\Annotation\Map;
 use OldTown\Workflow\ZF2\Service\Metadata\Storage\ResultMapMetadata;
 
 /**
@@ -98,18 +97,6 @@ class AnnotationReader implements ReaderInterface
         $rMethod = $r->getMethod($serviceMethod);
 
         $metadata = new Metadata();
-
-        /** @var Annotation\ArgumentsMap|null $argumentsMapAnnotation */
-        $argumentsMapAnnotation = $this->getReader()->getMethodAnnotation($rMethod, Annotation\ArgumentsMap::class);
-
-        if (null !== $argumentsMapAnnotation && is_array($argumentsMapAnnotation->argumentsMap)) {
-            foreach ($argumentsMapAnnotation->argumentsMap as $map) {
-                if ($map instanceof Map) {
-                    $metadata->addArgumentMap($map->to, $map->fromArgName);
-                }
-            }
-        }
-
 
         /** @var Annotation\ResultVariable|null $resultVariableAnnotation */
         $resultVariableAnnotation = $this->getReader()->getMethodAnnotation($rMethod, Annotation\ResultVariable::class);
